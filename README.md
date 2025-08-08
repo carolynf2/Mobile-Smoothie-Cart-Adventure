@@ -96,4 +96,4 @@ Created as part of a financial literacy education initiative to teach kids pract
 
 ---
 
-*This game teaches real business principles in a fun, risk-free environment where mistakes become learning opportunities.*RetryClaude does not have the ability to run the code it generates yet.Claude can make mistakes. Please double-check responses.
+*This game teaches real business principles in a fun, risk-free environment where mistakes become learning opportunities.
