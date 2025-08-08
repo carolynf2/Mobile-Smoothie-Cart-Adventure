@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍓 Smoothie Cart Business Game</title>
+    <link rel="stylesheet" href="smoothie_cart.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Setup Screen -->
+        <div id="setupScreen" class="screen">
+            <header class="game-header">
+                <h1>🍓 Smoothie Cart Business Game</h1>
+                <p>Build your smoothie empire, one cup at a time!</p>
+            </header>
+            
+            <div class="setup-form">
+                <h2>🎨 Design Your Cart</h2>
+                <div class="input-group">
+                    <label for="playerNameInput">Cart Name:</label>
+                    <input type="text" id="playerNameInput" placeholder="Enter your cart name..." maxlength="20">
+                </div>
+                
+                <div class="starting-info">
+                    <h3>Starting Resources:</h3>
+                    <ul>
+                        <li>💰 $100 starting funds</li>
+                        <li>📦 Basic inventory included</li>
+                        <li>🎯 Daily profit goals to achieve</li>
+                    </ul>
+                </div>
+                
+                <button id="startGameBtn" class="primary-btn">Start Your Business!</button>
+            </div>
+        </div>
+
+        <!-- Planning Screen -->
+        <div id="planningScreen" class="screen" style="display: none;">
+            <header class="dashboard-header">
+                <div class="header-info">
+                    <h1 id="cartName">🍓 Your Cart</h1>
+                    <div class="game-stats">
+                        <span id="currentDay">Day 1, Week 1</span>
+                        <span>💰 <span id="currentFunds">$100.00</span></span>
+                        <span>🏦 Savings: <span id="savingsJar">$0.00</span></span>
+                    </div>
+                </div>
+                
+                <div class="weather-info">
+                    <div id="currentWeather">☀️ Sunny | Temp: 25°C</div>
+                </div>
+            </header>
+
+            <div class="planning-sections">
+                <!-- Daily Planning -->
+                <section class="planning-card">
+                    <h2>📅 Daily Planning</h2>
+                    
+                    <div class="marketing-budget">
+                        <h3>📢 Marketing Budget:</h3>
+                        <div class="marketing-controls">
+                            <input type="number" id="marketingInput" min="0" max="50" step="5" placeholder="0">
+                            <button id="setMarketingBtn" class="secondary-btn">Set Budget</button>
+                        </div>
+                        <div class="marketing-display">Current: <span id="marketingSpend">$0</span></div>
+                    </div>
+                    
+                    <div class="location-selection">
+                        <h3>Select Location:</h3>
+                        <div class="location-grid">
+                            <button class="location-btn" data-location="beach">
+                                🏖️ Beach<br><small>Cost: $15</small>
+                            </button>
+                            <button class="location-btn" data-location="park">
+                                🌳 Park<br><small>Cost: $10</small>
+                            </button>
+                            <button class="location-btn" data-location="school">
+                                🏫 School<br><small>Cost: $5</small>
+                            </button>
+                            <button class="location-btn" data-location="office">
+                                🏢 Office<br><small>Cost: $20</small>
+                            </button>
+                        </div>
+                        <div class="cost-display">Moving Cost: <span id="movingCost">$0</span></div>
+                    </div>
+                    
+                    <div class="menu-customization">
+                        <h3>🧃 Customize Menu & Prices:</h3>
+                        <div class="menu-items">
+                            <div class="menu-item">
+                                <label>Strawberry Blast:</label>
+                                <input type="number" class="menu-price" data-item="strawberryBlast" id="strawberryBlastPrice" min="1" max="15" step="0.5" value="8">
+                            </div>
+                            <div class="menu-item">
+                                <label>Banana Split:</label>
+                                <input type="number" class="menu-price" data-item="bananaSplit" id="bananaSplitPrice" min="1" max="15" step="0.5" value="7">
+                            </div>
+                            <div class="menu-item" id="hoCocoaOption" style="display: none;">
+                                <label>Hot Cocoa:</label>
+                                <input type="number" class="menu-price" data-item="hotCocoa" id="hotCocoaPrice" min="1" max="10" step="0.5" value="5">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Inventory Management -->
+                <section class="planning-card">
+                    <h2>📦 Inventory</h2>
+                    <div class="inventory-table">
+                        <div class="inventory-header">
+                            <span>Ingredient</span>
+                            <span>In Stock</span>
+                            <span>Restock?</span>
+                        </div>
+                        <div class="inventory-row">
+                            <span>🍓 Strawberries</span>
+                            <span id="strawberriesCount">10</span>
+                            <input type="checkbox" data-restock="strawberries">
+                        </div>
+                        <div class="inventory-row">
+                            <span>🍌 Bananas</span>
+                            <span id="bananasCount">5</span>
+                            <input type="checkbox" data-restock="bananas">
+                        </div>
+                        <div class="inventory-row">
+                            <span>🧊 Ice Cubes</span>
+                            <span id="iceCount">20</span>
+                            <input type="checkbox" data-restock="ice">
+                        </div>
+                        <div class="inventory-row">
+                            <span>☕ Cocoa Powder</span>
+                            <span id="cocoaCount">0</span>
+                            <input type="checkbox" data-restock="cocoa">
+                        </div>
+                    </div>
+                    <button id="restockBtn" class="secondary-btn">Buy Ingredients</button>
+                </section>
+
+                <!-- Budget Goals & Expenses -->
+                <section class="planning-card">
+                    <h2>💰 Budget & Goals</h2>
+                    <div class="goal-setting">
+                        <label for="dailyGoalInput">Daily Profit Goal:</label>
+                        <input type="number" id="dailyGoalInput" min="10" max="200" step="5" value="50">
+                        <button id="setGoalBtn" class="secondary-btn">Set</button>
+                    </div>
+                    <div class="goal-setting">
+                        <label for="weeklyGoalInput">Weekly Profit Goal:</label>
+                        <input type="number" id="weeklyGoalInput" min="100" max="1000" step="50" value="300">
+                        <button id="setWeeklyGoalBtn" class="secondary-btn">Set</button>
+                    </div>
+                    <div class="goals-display">
+                        <div>Daily: <span id="dailyGoal">$50</span></div>
+                        <div>Weekly: <span id="weeklyGoal">$300</span></div>
+                        <div>Week Progress: <span id="weeklyProfit">$0</span></div>
+                    </div>
+                    
+                    <h3>📊 Daily Expense Tracker:</h3>
+                    <div class="expense-tracker">
+                        <div class="expense-item">
+                            <span>🥤 Ingredients:</span>
+                            <span id="dailyIngredients">$0.00</span>
+                        </div>
+                        <div class="expense-item">
+                            <span>🛣️ Gas/Transport:</span>
+                            <span id="dailyGas">$0.00</span>
+                        </div>
+                        <div class="expense-item">
+                            <span>📢 Marketing:</span>
+                            <span id="dailyMarketing">$0.00</span>
+                        </div>
+                        <div class="expense-item">
+                            <span>🔧 Repairs:</span>
+                            <span id="dailyRepairs">$0.00</span>
+                        </div>
+                        <div class="expense-total">
+                            <span>Total Expenses:</span>
+                            <span id="dailyExpensesTotal">$0.00</span>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Savings Jar -->
+                <section class="planning-card">
+                    <h2>🏦 Savings Jar</h2>
+                    <div class="savings-info">
+                        <p>Save profits for upgrades and emergencies!</p>
+                        <div class="savings-balance">Current Savings: <span id="savingsJar">$0.00</span></div>
+                    </div>
+                    
+                    <div class="savings-controls">
+                        <div class="savings-action">
+                            <input type="number" id="savingsInput" min="1" step="1" placeholder="Amount to save">
+                            <button id="addToSavingsBtn" class="secondary-btn">💰 Save Money</button>
+                        </div>
+                        <div class="emergency-action">
+                            <input type="number" id="emergencyInput" min="1" step="1" placeholder="Emergency amount">
+                            <button id="emergencyWithdrawBtn" class="emergency-btn">🚨 Emergency Withdraw</button>
+                        </div>
+                    </div>
+                    
+                    <div class="upgrades-section">
+                        <button id="buyUpgradeBtn" class="upgrade-btn">🛒 View Upgrades</button>
+                    </div>
+                </section>
+            </div>
+
+            <div class="action-buttons">
+                <button id="startDayBtn" class="primary-btn">Start Sales Day</button>
+            </div>
+        </div>
+
+        <!-- Simulation Screen -->
+        <div id="simulationScreen" class="screen" style="display: none;">
+            <div class="simulation-content">
+                <h2>🚚 Sales in Progress...</h2>
+                <div class="simulation-display">
+                    <div class="cart-animation">🍓</div>
+                    <p>Your smoothie cart is serving customers!</p>
+                    <p>Click below to see how the day went.</p>
+                </div>
+                <button id="simulateSalesBtn" class="primary-btn">View Day Results</button>
+            </div>
+        </div>
+
+        <!-- Summary Screen -->
+        <div id="summaryScreen" class="screen" style="display: none;">
+            <header class="summary-header">
+                <h2>📊 End-of-Day Summary</h2>
+            </header>
+
+            <div class="summary-sections">
+                <section class="summary-card">
+                    <h3>💰 Financial Results</h3>
+                    <div class="financial-stats">
+                        <div class="stat-item">
+                            <span>Revenue:</span>
+                            <span class="positive" id="dayRevenue">$0.00</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>Expenses:</span>
+                            <span class="negative" id="dayExpenses">$0.00</span>
+                        </div>
+                        <div class="stat-item total">
+                            <span>Net Profit:</span>
+                            <span id="dayProfit">$0.00</span>
+                        </div>
+                    </div>
+                    <div id="expenseBreakdown" class="expense-breakdown"></div>
+                </section>
+
+                <section class="summary-card">
+                    <h3>👥 Customer Insights</h3>
+                    <div class="customer-stats">
+                        <p>Customers Served: <span id="customersServed">0</span></p>
+                        <p>Most Popular Flavor: <span id="popularFlavor">None</span></p>
+                    </div>
+                </section>
+
+                <section class="summary-card">
+                    <h3>💬 Customer Feedback</h3>
+                    <ul id="customerFeedback">
+                        <li>"Great smoothie!"</li>
+                    </ul>
+                </section>
+
+                <section class="summary-card">
+                    <h3>🎯 Weekly Goals Progress</h3>
+                    <div class="goals-progress">
+                        <div class="goal-item">
+                            <span>Earn $500 Profit:</span>
+                            <span class="progress">In Progress</span>
+                        </div>
+                        <div class="goal-item">
+                            <span>Serve 100 Customers:</span>
+                            <span class="progress">In Progress</span>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="action-buttons">
+                <button id="nextDayBtn" class="primary-btn">Continue to Next Day</button>
+            </div>
+        </div>
+        
+        <!-- Upgrades Modal -->
+        <div id="upgradesModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>🛒 Cart Upgrades</h2>
+                    <span class="close-modal" onclick="document.getElementById('upgradesModal').style.display='none'">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <p>Use your savings to buy upgrades that improve your business!</p>
+                    <div id="upgradesList" class="upgrades-list"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="smoothie_cart.js"></script>
+</body>
+</html>
